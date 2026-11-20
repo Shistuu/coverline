@@ -1,0 +1,44 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #1a1a1a;
+  background: #f5f6f8;
+  line-height: 1.45;
+}
+
+body { margin: 0; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+h1 { margin: 0; font-size: 1.6rem; }
+h2 { font-size: 1.1rem; margin: 0 0 12px; }
+h3 { font-size: 1rem; margin: 0; }
+small { color: #555; font-weight: 400; }
+
+.row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.top { margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; align-items: start; }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+.card { background: #fff; border: 1px solid #dde1e6; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+.card p { margin: 8px 0; }
+
+.form label { display: block; font-size: 0.85rem; margin-bottom: 10px; }
+input, textarea { display: block; width: 100%; box-sizing: border-box; padding: 7px 9px; margin-top: 3px; border: 1px solid #c4c9d0; border-radius: 5px; font: inherit; }
+textarea { min-height: 60px; }
+
+button { padding: 7px 14px; border: 1px solid #1b6b8f; background: #1b6b8f; color: #fff; border-radius: 5px; font: inherit; cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: default; }
+button.danger { background: #b3261e; border-color: #b3261e; }
+nav button { background: #fff; color: #1b6b8f; margin-left: 6px; }
+nav button.active { background: #1b6b8f; color: #fff; }
+
+.review { display: grid; gap: 8px; margin-top: 10px; }
+.review .row { justify-content: flex-start; }
+
+.badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: 600; }
+.badge.quoted { background: #e3f1fb; color: #1b6b8f; }
+.badge.referred { background: #fff4d6; color: #8a5a00; }
+.badge.declined { background: #fde7e5; color: #b3261e; }
+.badge.bound { background: #e2f5e7; color: #1e7a3a; }
+
+.log { margin: 6px 0 0; padding-left: 18px; font-size: 0.85rem; }
+.error { color: #b3261e; }
+.muted { color: #666; }
