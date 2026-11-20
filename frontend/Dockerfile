@@ -1,0 +1,12 @@
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+# The browser calls the API on the same domain; Caddy forwards /api/* to the backend.
+ENV VITE_API_URL=/api
+RUN npm run build
+
+FROM caddy:2-alpine
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY --from=build /app/dist /srv

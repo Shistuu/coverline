@@ -1,0 +1,40 @@
+# Production: one server runs Postgres, the API, and Caddy (static site + HTTPS).
+# Only Caddy is reachable from the internet (ports 80 and 443).
+#   cp .env.example .env   # then fill it in
+#   docker compose -f docker-compose.prod.yml up -d --build
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: coverline
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: coverline
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coverline"]
+      interval: 2s
+      retries: 15
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://coverline:${POSTGRES_PASSWORD}@db:5432/coverline
+      CORS_ORIGINS: '["https://${DOMAIN}"]'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+    ports: ["80:80", "443:443"]
+    volumes: [caddy_data:/data]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  caddy_data:

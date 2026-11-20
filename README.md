@@ -34,6 +34,14 @@ Set `DATABASE_URL` if your Postgres isn't at `postgresql+psycopg://localhost:543
 
 With Docker, `docker compose up` starts Postgres and the API together.
 
+## Deploy (one AWS EC2 server)
+`docker-compose.prod.yml` runs Postgres, the API, and Caddy on one machine. Caddy serves the React build, forwards `/api/*` to FastAPI, and gets an HTTPS certificate automatically. Only ports 80 and 443 are open to the internet.
+
+```bash
+cp .env.example .env    # set DOMAIN and POSTGRES_PASSWORD
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
 ## API
 | Method | Path | What it does |
 |---|---|---|

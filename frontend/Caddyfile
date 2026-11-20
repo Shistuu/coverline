@@ -1,0 +1,14 @@
+# DOMAIN comes from the server's .env. Caddy gets an HTTPS certificate for it automatically.
+{$DOMAIN} {
+	encode gzip
+
+	handle_path /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}
